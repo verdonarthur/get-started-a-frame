@@ -11,14 +11,30 @@
   </head>
   <body>
     <a-scene id="mainScene">
+      <a-assets>
+        <img
+          id="targetTexture"
+          src="./assets/target_1/textures/Scene_-_Root_baseColor.png"
+        />
+        <a-asset-item
+          id="targetModel"
+          src="./assets/target_1/scene.gltf"
+        ></a-asset-item>
+        <a-asset-item
+          id="arrowModel"
+          src="./assets/arrow/scene.gltf"
+        ></a-asset-item>
+      </a-assets>
+
       <a-entity
         id="bulletTemplate"
+        gltf-model="#arrowModel"
         bullet
-        geometry="primitive: sphere; radius: 0.1"
-        material="color: orange"
       ></a-entity>
 
-      <a-sky color="#87CEEB"></a-sky>
+      <a-light type="ambient" color="#ffffff" intensity="0.8"></a-light>
+
+      <a-entity environment="preset: forest"></a-entity>
       <a-camera shooter click-to-shoot>
         <a-cursor></a-cursor>
       </a-camera>
