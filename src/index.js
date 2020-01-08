@@ -8,6 +8,24 @@ AFRAME.registerComponent("click-to-shoot", {
     document.body.addEventListener("mousedown", () => {
       this.el.emit("shoot");
     });
+
+    document.body.addEventListener("shoot", evt => {
+      let BulletContainer = document.querySelector(
+        "#superShooterBulletContainer"
+      );
+
+      let activeBullet =
+        BulletContainer.object3D.children[
+          BulletContainer.object3D.children.length - 1
+        ];
+      let camera = document.querySelector("#camera");
+      let bow = document.querySelector("#playerBow");
+      bow.object3D.getWorldPosition(activeBullet.position);
+      camera.object3D.getWorldQuaternion(activeBullet.rotation);
+
+      activeBullet.rotateX(Math.PI);
+      activeBullet.translateY(-0.5);
+    });
   }
 });
 
@@ -20,12 +38,12 @@ AFRAME.registerComponent("shootable-box", {
     ele.setAttribute("rotation", "0 180 0");
 
     ele.addEventListener("hit", evt => {
-      console.log("Hit on:", ele);
+      ele.sceneEl.emit("hit-on-target");
     });
 
     ele.addEventListener("die", evt => {
       ele.object3D.visible = false;
-      ele.setAttribute("target", { active: false });
+      ele.setAttribute("target", "active", false);
     });
   }
 });
@@ -43,6 +61,32 @@ const generateWallToShoot = scene => {
 
 document.addEventListener("DOMContentLoaded", () => {
   let mainScene = document.querySelector("#mainScene");
+  let nbrTargetHit = 0;
+
+  mainScene.addEventListener("hit-on-target", () => {
+    document
+      .querySelector("#scoreText")
+      .setAttribute("text", "value", `HIT ${++nbrTargetHit}/5`);
+
+    if (nbrTargetHit >= 5) {
+      nbrTargetHit = 0;
+      mainScene.emit("reset-scene");
+    }
+  });
+
+  mainScene.addEventListener("reset-scene", () => {
+    document
+      .querySelector("#scoreText")
+      .setAttribute("text", "value", `HIT ${nbrTargetHit}/5`);
+
+    document
+      .querySelectorAll("a-entity[shootable-box]")
+      .forEach(shootableBox => {
+        shootableBox.object3D.visible = true;
+        shootableBox.setAttribute("target", "active", true);
+        shootableBox.setAttribute("target", "healthPoints", 1);
+      });
+  });
 
   generateWallToShoot(mainScene);
 });
