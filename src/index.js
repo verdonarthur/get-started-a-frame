@@ -5,7 +5,11 @@ import "./helper";
 
 AFRAME.registerComponent("click-to-shoot", {
   init: function() {
-    document.body.addEventListener("mousedown", () => {
+    document.body.addEventListener("triggerdown", () => {
+      this.el.emit("shoot");
+    });
+
+    document.body.addEventListener("click", () => {
       this.el.emit("shoot");
     });
 
@@ -35,7 +39,6 @@ AFRAME.registerComponent("shootable-box", {
     let ele = this.el;
 
     ele.setAttribute("gltf-model", "#targetModel");
-    ele.setAttribute("rotation", "0 180 0");
 
     ele.addEventListener("hit", evt => {
       ele.sceneEl.emit("hit-on-target");
@@ -56,6 +59,8 @@ const generateWallToShoot = scene => {
     shootablebox.setAttribute("target", { healthPoints: 1 });
     shootablebox.setAttribute("shootable-box", {});
     shootablebox.setAttribute("position", `${2 * (3 - i)} 0 -5`);
+    shootablebox.setAttribute("rotation", "0 180 0");
+    console.log("coucou")
   }
 };
 

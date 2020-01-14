@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack -w --mode development"
+    "start": "webpack-dev-server",
+    "start:dev": "webpack-dev-server",
+    "start:prod": "webpack-dev-server",
+    "build": "webpack --mode production"
   },
   "keywords": [],
   "author": "",

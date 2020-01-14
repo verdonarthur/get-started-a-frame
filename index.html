@@ -11,6 +11,7 @@
   </head>
   <body>
     <a-scene id="mainScene">
+      <!--MIXIN AND ASSETS-->
       <a-assets>
         <a-asset-item
           id="targetModel"
@@ -26,19 +27,46 @@
         ></a-asset-item>
       </a-assets>
 
+      <!--ENVIRONMENT-->
+      <a-entity environment="preset: forest"></a-entity>
+
+      <!--LIGHTS-->
       <a-light type="ambient" color="#ffffff" intensity="0.8"></a-light>
 
+      <!--SCENE ELEMENTS-->
       <a-entity
-      id="bulletTemplate"
-      gltf-model="#arrowModel"
-      bullet="speed:10"
-      scale="2 2 2"
-    ></a-entity>
+        id="bulletTemplate"
+        gltf-model="#arrowModel"
+        bullet="speed:10"
+        scale="2 2 2"
+      ></a-entity>
 
-      <a-entity environment="preset: forest"></a-entity>
-      <a-entity id="scoreText" text="value: HIT 0/5;width:10;align:center;"  position="0 5 -6"></a-entity>
+      <a-entity
+        id="scoreText"
+        text="value: HIT 0/5;width:10;align:center;"
+        position="0 5 -6"
+      ></a-entity>
+
+      >
+
+      <a-entity
+        target="healthpoint:1"
+        shootable-box=""
+        position="0 0 4"
+      ></a-entity>
+
+      <!--CAMERAS-->
       <a-camera id="camera" shooter>
-        <a-entity id="playerBow" gltf-model="#bowModel" position="0.2 -0.8 -0.5" rotation="0 90 0"  click-to-shoot></a-entity>
+        <a-entity oculus-touch-controls="hand: left"></a-entity>
+        <a-entity oculus-touch-controls="hand: right">
+          <a-entity
+            id="playerBow"
+            gltf-model="#bowModel"
+            position="0.2 -0.8 -0.5"
+            rotation="0 90 0"
+            click-to-shoot
+          ></a-entity>
+        </a-entity>
         <a-cursor></a-cursor>
       </a-camera>
     </a-scene>
