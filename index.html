@@ -37,7 +37,7 @@
       <a-entity
         id="bulletTemplate"
         gltf-model="#arrowModel"
-        bullet="speed:10"
+        bullet="speed:10;maxTime:3"
         scale="2 2 2"
       ></a-entity>
 
@@ -47,28 +47,72 @@
         position="0 5 -6"
       ></a-entity>
 
-      >
+      <a-entity id="targets" position="0 0 -4" rotation="0 180 0">
+        <a-entity
+          target="healthPoints:1"
+          shootable-box=""
+          position="-3 0 0"
+          visible="true"
+        ></a-entity>
 
-      <a-entity
-        target="healthpoint:1"
-        shootable-box=""
-        position="0 0 4"
-      ></a-entity>
+        <a-entity
+          target="healthPoints:1"
+          shootable-box=""
+          position="0 0 2"
+          visible="true"
+        ></a-entity>
+
+        <a-entity
+          target="healthPoints:1"
+          shootable-box=""
+          position="3 0 0"
+          visible="true"
+        ></a-entity>
+
+      </a-entity>
+
 
       <!--CAMERAS-->
-      <a-camera id="camera" shooter>
-        <a-entity oculus-touch-controls="hand: left"></a-entity>
-        <a-entity oculus-touch-controls="hand: right">
+      <a-entity
+        id="cameraRig"
+      >
+        <a-camera
+          id="head"
+        >
           <a-entity
-            id="playerBow"
-            gltf-model="#bowModel"
-            position="0.2 -0.8 -0.5"
-            rotation="0 90 0"
-            click-to-shoot
+            cursor
+            disable-in-vr="component: cursor"
+            geometry="primitive: circle; radius: 0.0005"
+            position="0 0 -0.1"            
           ></a-entity>
+        </a-camera>
+
+        <a-entity
+          id="hands"
+          position="0 0.9 0"
+          bind-rotation="targetId: head"
+          shooter
+        >
+          <a-entity
+            position="-0.3 0 -0.3"            
+            rotation="0 0 90"
+            super-hands hand-controls="left"
+          ></a-entity>
+
+          <a-entity
+            position="0.3 0 -0.3"
+            rotation="0 0 -90"
+            super-hands hand-controls="right"
+          >
+            <a-entity
+              id="playerBow"              
+              gltf-model="#bowModel"
+              rotation="-90 90 0"
+              click-to-shoot
+            ></a-entity>
+          </a-entity>
         </a-entity>
-        <a-cursor></a-cursor>
-      </a-camera>
+      </a-entity>
     </a-scene>
   </body>
 </html>

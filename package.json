@@ -17,6 +17,7 @@
     "aframe": "^1.0.3",
     "aframe-environment-component": "^2.0.0",
     "aframe-super-shooter-kit": "^1.1.7",
+    "super-hands": "^3.0.0",
     "webpack": "^4.41.5"
   },
   "devDependencies": {
